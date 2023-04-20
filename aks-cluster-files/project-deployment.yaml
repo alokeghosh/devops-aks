@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: greencontainer
-        image: devopesakscr.azurecr.io/devopsrepository:4
+        image: devopesakscr.azurecr.io/devopsrepository:$(Build.BuildId)
         ports:
         - containerPort: 80
 
