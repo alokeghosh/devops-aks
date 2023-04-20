@@ -1,45 +1,42 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: project-aks01
+  name: aloke-ns-green 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-aks01
-  namespace: project-aks01
-  labels:
-    app: dev
+  name: green-deployment
+  namespace: aloke-ns-green
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: dev
+      app: green
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
-      name: project-aks01-pod
       labels:
-        app: dev
+        app: green
     spec:
       containers:
-      - name: project-aks01-container
-        image: alokeacr.azurecr.io/alokeacr/project-aks01:latest
-        imagePullPolicy: Always
+      - name: greencontainer
+        image: devopesakscr.azurecr.io/devopsrepository:4
         ports:
-        - containerPort: 8501
+        - containerPort: 80
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: project-aks01-service
-  namespace: project-aks01
+  name: green-svc
+  namespace: aloke-ns-green
   labels:
-    service: project-aks01-service
+    service: green-svc
 spec:
   type: ClusterIP
   selector:
-    app: dev
+    app: green
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8501
+      targetPort: 80
